@@ -1,5 +1,6 @@
 package com.example.noteService_hw.service;
 
+import com.example.noteService_hw.aspect.TrackUserAction;
 import com.example.noteService_hw.model.Note;
 import com.example.noteService_hw.repository.NoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,23 +17,27 @@ public class NoteServiceImpl implements NoteService {
     public NoteServiceImpl(NoteRepository noteRepository) {
         this.noteRepository = noteRepository;
     }
-
+//Применяем аннотацию @TrackUserAction для всех методов service
     @Override
+    @TrackUserAction
     public List<Note> getAllNotes() {
         return noteRepository.findAll();
     }
 
     @Override
+    @TrackUserAction
     public Optional<Note> getNoteById(Long id) {
         return noteRepository.findById(id) ;
     }
 
     @Override
+    @TrackUserAction
     public Note addNote(Note note) {
         return noteRepository.save(note);
     }
 
     @Override
+    @TrackUserAction
     public Note updateNote(Long id, Note updatedNote) {
         // Получение существующей заметки по идентификатору.
         Optional<Note> existingNoteOptional = getNoteById(id);
@@ -51,6 +56,7 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
+    @TrackUserAction
     public void deleteNote(Long id) {
         noteRepository.deleteById(id);
 
